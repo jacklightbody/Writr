@@ -1,0 +1,23 @@
+#container-thin{
+	margin-left: auto;
+	margin-right: auto;
+	width:350px;
+	color: #666666;
+}
+#container-wide{
+	margin-left: auto;
+	margin-right: auto;
+	width:600px;
+	color: #666666;
+}
+.center{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+.full{
+	width: 350px!important;
+}
+.topbar-wrapper{
+	height: 50px;
+}
