@@ -14,6 +14,10 @@ class User{
 			$this->getByName($uName);
 		}
 	}
+	public function getAll(){
+		$db=load::db();
+		return $db->getAll('SELECT * FROM '.WRITR_PREFIX.'users');
+	}
 	public function getByID($uID){
 		$db=load::db();
 		$user=$db->getAll('SELECT * FROM '.WRITR_PREFIX.'users WHERE uID=?',array($uID));
@@ -29,25 +33,39 @@ class User{
 		$user=$db->getAll('SELECT * FROM '.WRITR_PREFIX.'users WHERE uEmail=?',array($uEmail));
 		$this->user=$user[0];
 	}
-	public function checkUnique($uName,$uEmail){
+	public function checkUnique($uName,$uEmail,$uID=false){
 		$db=load::db();
 		$name=text::sanitize($uName);
 		$email=text::sanitize($uEmail);
-		$n=$db->getOne('SELECT uID FROM '.WRITR_PREFIX.'users WHERE uLogin=?',array($uName));
-		$e=$db->getOne('SELECT uID FROM '.WRITR_PREFIX.'users WHERE uEmail=?',array($uEmail));
+		if(isset($uID)){
+			$n=$db->getOne('SELECT uID FROM '.WRITR_PREFIX.'users WHERE uLogin=? AND uID<>?',array($uName,$uID));
+			$e=$db->getOne('SELECT uID FROM '.WRITR_PREFIX.'users WHERE uEmail=? AND uID<>?',array($uEmail,$uID));
+		}else{
+			$n=$db->getOne('SELECT uID FROM '.WRITR_PREFIX.'users WHERE uLogin=?',array($uName));
+			$e=$db->getOne('SELECT uID FROM '.WRITR_PREFIX.'users WHERE uEmail=?',array($uEmail));
+		}
 		if(isset($n)||isset($e)){
 			return false;
 		}
 		return true;
 	}
-	public function update($uID,$name,$pass,$email,$active){
+	public function update($uID,$name,$email,$active){
+		$name=text::sanitize($name);
+		$email=text::sanitize($email);
+		$db=load::db();
+		if(self::checkUnique($name,$email,$uID)){
+			$db->Execute('UPDATE '.WRITR_PREFIX.'users set uLogin=?,uEmail=?,uIsActive=? WHERE uID=?', array($name,$email,$active,$uID));
+			return true;
+		}else{
+			return false;
+		}
+	}
+	public function updatePass($pass,$uID){
 		load::helper('text');
 		$db=load::db();
-		$name=text::sanitize($name);
 		$pass=text::sanitize($pass);
-		$email=text::sanitize($email);
 		$pass=self::makePass($pass);
-		$db->Execute('UPDATE '.WRITR_PREFIX.'users set uLogin=?,uEmail=?,uPass=?,uIsActive=? WHERE uID=?', array($name,$email,$pass,$active,$uID));
+		$db->Execute('UPDATE '.WRITR_PREFIX.'users set uPass=? WHERE uID=?', array($pass,$uID));
 	}
 	public function add($name,$pass,$email){
 		load::helper('text');
@@ -56,7 +74,12 @@ class User{
 		$pass=text::sanitize($pass);
 		$email=text::sanitize($email);
 		$pass=self::makePass($pass);
-		$db->Execute('INSERT INTO '.WRITR_PREFIX.'users (uLogin,uEmail,uPass,uIsActive) VALUES (?,?,?,1)', array($name,$email,$pass));
+		if(self::checkUnique($name,$email)){
+			$db->Execute('INSERT INTO '.WRITR_PREFIX.'users (uLogin,uEmail,uPass,uIsActive,uDateRegistered) VALUES (?,?,?,1,?)', array($name,$email,$pass,time()));
+			return true;
+		}else{
+			return false;
+		}
 	}
 	public function addSuper($name,$pass,$email){
 		load::helper('text');
@@ -122,6 +145,12 @@ class User{
 		$cookie=md5($ip.':'.$uID);
 		if(isset($_COOKIE['writr'])&&$_COOKIE['writr']==$cookie){
 			return $u;
+		}
+	}
+	public function delete($id){
+		if($id>1){
+			$db=load::db();
+			$db->execute('DELETE FROM '.WRITR_PREFIX.'users where uID=?',array($id));
 		}
 	}
 	public function logout(){

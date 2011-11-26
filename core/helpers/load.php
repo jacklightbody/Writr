@@ -104,8 +104,8 @@ class Load {
      		require_once('controllers/'.$name.'.php');
      	}elseif(isset($extHandle)&&file_exists('extensions/'.$extHandle.'/controllers/'.$name)){
      		require_once('extensions/'.$extHandle.'/controllers/'.$name);
-     	}elseif(file_exists('controllers/'.$name.'.php')){
-     		require_once('controllers/'.$name.'.php');
+     	}elseif(file_exists('core/controllers/'.$name.'.php')){
+     		require_once('core/controllers/'.$name.'.php');
      	}
      }
      /*

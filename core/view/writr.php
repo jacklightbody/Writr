@@ -79,15 +79,14 @@ if(isset($_GET['task'])){
 	}
 	echo '</div>';
 }else{
-	$posts=Post::getAllPosts();?>
-	<div id="container-wide">
+	$posts=$data['list'];?>
 	<a href="?path=writr&task=new" class="btn large primary">New Post</a>
 	<br/><br/>
 	<table class="post-list bordered-table zebra-striped">
 	<thead><th>Name</th><th>Author</th><th>Date Posted</th><th>Options</th></thead>
 	<?php foreach($posts as $post){ ?>
 		<tr>
-			<td><?php echo $post['pName'];?></td>
+			<td><a href="index.php?path=<?php echo $post['pPath'];?>"><?php echo $post['pName'];?></a></td>
 			<td><?php  $u=new User($post['pAuthorID']);echo $u->getLogin();?></td>
 			<td style="width:140px;"><?php echo date('F j, Y', $post['pDatePublished']);?></td>
 			<td style="width:175px;"><a class="btn small" href="?path=writr&task=edit&id=<?php echo $post['pID'];?>">Edit</a> <a class="btn small" href="?path=writr&task=delete&id=<?php echo $post['pID'];?>">Delete</a> 
@@ -99,5 +98,6 @@ if(isset($_GET['task'])){
 			</td>
 		</tr>
 	<?php } ?>
-	</table></div><?php
+	</table><?php
+	echo $data['pagination'];
 }?>

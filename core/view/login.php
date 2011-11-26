@@ -57,7 +57,7 @@ if(isset($resetMessage)){
 				<input type="email" class="xlarge" name="email" placeholder="email@email.com"/>
             </div>
             <div class="modal-footer">
-              <input type="submit" class="btn large left primary" value="Request">
+              <input type="submit" class="btn left primary" value="Request">
               </form>
             </div>
           </div>

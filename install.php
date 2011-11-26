@@ -22,14 +22,18 @@ if(!empty($_POST)){
 		require 'core/define.php';
 		//create the tables we need
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'users(uID integer AUTO_INCREMENT,uLogin varchar(255), uEmail varchar(255), uPass varchar(255),
-uIsActive integer, PRIMARY KEY (uID))');
+uIsActive integer, uDateRegistered integer, PRIMARY KEY (uID))');
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'posts(pID integer AUTO_INCREMENT,pName varchar(255), pPath varchar(500),pBody longtext, pTheme varchar(255),
 pIsActive integer, pAuthorID integer, pDatePublished integer, UNIQUE (pPath),PRIMARY KEY (pID))');
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'ip(ipID int AUTO_INCREMENT,ip varchar(255), uID integer,PRIMARY KEY (ipID))');
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'config(cID int AUTO_INCREMENT,cKey varchar(255), cValue mediumtext,PRIMARY KEY (cID))');
+		$db->execute('CREATE TABLE '.WRITR_PREFIX.'dashboardelements(eID int AUTO_INCREMENT,ext varchar(255), name varchar(255),file varchar(255),PRIMARY KEY (eID))');
 		Config::save('site_name',$_POST['site_name']);
 		User::addSuper($_POST['user'],$_POST['pass'],$_POST['email']);
 		User::authenticate($_POST['user'],$_POST['pass']);
+		load::helper('dashboard_elements');
+		DashboardElements::registerElement('user','Manage Users','core');
+		DashboardElements::registerElement('general','Settings','core');
 		header('Location: writr.php');
 		exit;
 	}else{

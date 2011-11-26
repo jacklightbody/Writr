@@ -24,6 +24,14 @@ Class WritrController extends Controller{
 		$themes=array();
 		$cthemes=array();
 		$handle=opendir('themes');
+		load::helper('pagination');
+		$posts=Post::getAllPosts();
+		if(!isset($_GET['page'])){
+			$_GET['page']=0;
+		}
+		$up = new Pagination($posts,$_GET['page'],'dashboard.php?path=writr');
+		$list=$up->getList();
+		$nav=$up->generateLinks();
 		if($_GET['task']=='new'||$_GET['task']==edit){
 			if($handle) {
 				while(($file = readdir($handle)) !== false) {
@@ -46,6 +54,8 @@ Class WritrController extends Controller{
 		}if($_GET['task']=='edit'){
 			$p=new Post($_GET['id']);
 			return array("post"=>$p->getPostInfo(),"themes"=>$themes,"cthemes"=>$cthemes);
+		}else{
+			return array("list"=>$list,"pagination"=>$nav);
 		}
 	}
 	function generateUrl ($s) {

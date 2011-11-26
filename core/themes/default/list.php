@@ -4,7 +4,8 @@
 <head>
   <meta charset='utf-8'>
 
-  <title></title>
+  <title>Home | <?php echo Config::get('site_name');?></title>
+    <?php echo $headerItems;?>
   <link rel="stylesheet" href="<?php echo $themePath;?>/theme.css"/>
 </head>
 
@@ -21,9 +22,9 @@
 ?>
 <div class="clearfix">
 	<div style="width:50px;clear:both;float:left;margin-right:20px;">
-	<?php echo '<span class="date">'.date('j',$post['pDatePublished']).'</span> ';
-	echo '<span class="month">'.date('M, Y',$post['pDatePublished']).'</span>';?>
-	</div><div><a href="?path=<?php echo $post['pPath'];?>"><h2><?php echo $post['pName'];?></h2></a><p class="small-description"><?php echo Text::shortenTextWord($post['pBody'],300);?> <a href="?path=<?php echo $post['pPath'];?>">Read More &raquo;</a></p></div></div><hr/>
+	</div><div><a href="?path=<?php echo $post['pPath'];?>"><h2 style="margin-bottom:-10px;"><?php echo $post['pName'];?></a></h2> 
+	<p style="font-size:10px;"> posted by <?php $u=new User($post['pAuthorID']);echo $u->getLogin();?> on <?php echo date('M j,Y',$post['pDatePublished']);?>. <a href="?path=<?php echo $post['pPath'];?>#disqus_thread" data-disqus-identifier="<?php echo $post['pID'];?>">Comments</a></p>
+	<p class="small-description"><?php echo Text::shortenTextWord($post['pBody'],300);?> <a href="?path=<?php echo $post['pPath'];?>">Read More &raquo;</a></p></div></div><hr/>
 <?php }?>
 </div>
 </div>

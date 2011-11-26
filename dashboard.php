@@ -23,10 +23,12 @@ if(!isset($_GET['path'])){
 Load::helper('view');
 Load::helper('text');
 Load::helper('controller');
+load::model('dashboard_elements');
+$elements=DashboardElements::getElements();
 $route=explode('/', View::route(1));
 array_pop($route);//pop off the file
 $themePath=implode('/', $route);
-require_once 'core/controllers/'.$_GET['path'].'.php';
+load::controller($_GET['path']);
 $controller=Text::camelcase($_GET['path']).'Controller';
 $headerCss=array('core/css/bootstrap.css','core/css/core.css');
 $headerJs=array('core/js/jquery.js');
@@ -45,6 +47,7 @@ foreach($headerCss as $css){
 foreach($headerJs as $js){
 	$headerItems.='<script type="text/javascript" src="'.$js.'"></script>';
 }
+$headerItems.='<title>Dashboard | '.config::get('site_name').'</title>';
 ob_start();
 require 'core/view/'.$_GET['path'].'.php';
 $pageContent = ob_get_contents();

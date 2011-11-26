@@ -2,11 +2,8 @@
 <html>
 <head>
   <meta charset='utf-8'>
-
-  <title></title>
   <?php echo $headerItems;?>
   <link rel="stylesheet" href="<?php echo $themePath;?>/theme.css"/>
-	<script type="text/javascript" src="core/js/dropdown.js"></script>
 </head>
 
 <body>
@@ -22,10 +19,18 @@
           </ul>
           <ul class="nav">
             <li class="menu">
-              <a href="?path=writr" class="menu">Write</a>
-              <ul class="menu-dropdown">
+              <a href="?path=writr&task=new" onmouseover="$(this).parent('li').addClass('open')" onmouseout="$(this).parent('li').removeClass('open')" class="menu">Write</a>
+              <ul onmouseover="$(this).parent('li').addClass('open')" onmouseout="$(this).parent('li').removeClass('open')" class="menu-dropdown">
               	<li><a href="?path=writr">Posts</a></li>
                 <li><a href="?path=writr&task=new">New Post</a></li>
+              </ul>
+            </li>
+            <li class="menu">
+              <a href="?path=manage" onmouseover="$(this).parent('li').addClass('open')" onmouseout="$(this).parent('li').removeClass('open')" class="menu">Manage</a>
+              <ul onmouseover="$(this).parent('li').addClass('open')" onmouseout="$(this).parent('li').removeClass('open')" class="menu-dropdown">
+                <?php foreach($elements as $el){ ?>
+                    <li><a href="?path=<?php echo $el['file'];?>"><?php echo $el['name']; ?></a></li>
+                <?php }?>
               </ul>
             </li>
           </ul><?php }?>
@@ -33,6 +38,8 @@
       </div>
     </div>
   </div>
+  <div id="container-wide">
 <?php echo $pageContent; ?>
+</div>
 </body>
 </html>

@@ -29,7 +29,12 @@ class Config {
 	*/
 	public function save($handle,$data){
 		$db=load::db();
-		$db->query('INSERT INTO '.WRITR_PREFIX.'config (cKey,cValue) VALUES (?,?)', array($handle,$data));
+		$v=$db->getOne("SELECT cValue from ".WRITR_PREFIX."config where cKey=?",array($handle));
+		if($v){
+			$db->query('UPDATE '.WRITR_PREFIX.'config set cValue=? WHERE cKey=?', array($data,$handle));
+		}else{
+			$db->query('INSERT INTO '.WRITR_PREFIX.'config (cValue,cKey) VALUES (?,?)', array($data,$handle));
+		}
 	}
 	/*
 	 Function: save
