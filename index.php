@@ -10,12 +10,12 @@ Load::helper('view');
 $route=explode('/', View::route());
 array_pop($route);//get the path to the theme.
 $themePath=implode('/', $route);
-if(isset($_GET['path'])){
+if(isset($_GET['path'])&&Post::isValidPath($_GET['path'])){
 	$post=new Post();
 	$headerItems='<script type="text/javascript">var disqus_developer = 1;var disqus_shortname = "'.config::get('disqus_username').'";var disqus_identifier = "'.$post->getID().'";</script>';
-}else{
+}elseif(!$_GET['path']){
 	$headerItems= <<<EOD
-	<script type="text/javascript">var disqus_developer = 1;var disqus_shortname = "'.config::get('disqus_username').'";
+	<title>Home | Config::get('site_name')</title><script type="text/javascript">var disqus_developer = 1;var disqus_shortname = "'.config::get('disqus_username').'";
     (function () {
         var s = document.createElement('script'); s.async = true;
         s.type = 'text/javascript';
@@ -24,6 +24,13 @@ if(isset($_GET['path'])){
     }());
 </script>
 EOD;
+	load::helper('pagination');
 	$posts=Post::getAllLivePosts();
+	$p=New Pagination($posts, $_GET['postPage'],'index.php');
+	$posts=$p->getList();
+	$pagination=$p->generateLinks();
+}else{
+	$_GET['path']='page_not_found';
+	$headerItems='<title> Page Not Found | '.Config::get('site_name').'</title>';
 }
 require(View::route());//include the theme file

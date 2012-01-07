@@ -29,6 +29,8 @@ pIsActive integer, pAuthorID integer, pDatePublished integer, UNIQUE (pPath),PRI
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'config(cID int AUTO_INCREMENT,cKey varchar(255), cValue mediumtext,PRIMARY KEY (cID))');
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'dashboardelements(eID int AUTO_INCREMENT,ext varchar(255), name varchar(255),file varchar(255),PRIMARY KEY (eID))');
 		Config::save('site_name',$_POST['site_name']);
+		Config::save('home_theme','default');
+		Config::save('posts_home_page',10);
 		User::addSuper($_POST['user'],$_POST['pass'],$_POST['email']);
 		User::authenticate($_POST['user'],$_POST['pass']);
 		load::helper('dashboard_elements');

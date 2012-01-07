@@ -135,4 +135,20 @@ class Load {
      		return 'core/themes/'.$handle.'/default/'.$template.'.php';
      	}
      }
+    public function oneOff($template,$extHandle=null){
+    	$handle=Config::get('home_theme');
+    	if(file_exists('view/'.$template.'.php')){
+    		return 'view/'.$template.'.php';
+    	}elseif(file_exists('core/view/'.$template.'.php')){
+    		return 'core/view/'.$template.'.php';
+	    }elseif(file_exists('themes/'.$handle.'/'.$template.'.php')){
+     		return 'themes/'.$handle.'/'.$template.'.php';
+     	}elseif(isset($extHandle)&&file_exists('extensions/'.$extHandle.'/themes/'.$handle.'/'.$template.'.php')){
+     		return 'extensions/'.$extHandle.'/themes/'.$handle.'/'.$template.'.php';
+     	}elseif(file_exists('core/themes/'.$handle.'/'.$template.'.php')){
+     		return 'core/themes/'.$handle.'/'.$template.'.php';
+     	}else{
+     		return 'core/themes/'.$handle.'/default/'.$template.'.php';
+     	}
+    }
 }

@@ -27,6 +27,7 @@
 	<p class="small-description"><?php echo Text::shortenTextWord($post['pBody'],300);?> <a href="?path=<?php echo $post['pPath'];?>">Read More &raquo;</a></p></div></div><hr/>
 <?php }?>
 </div>
+<?php echo $pagination;?>
 </div>
 </body>
 </html>

@@ -29,9 +29,13 @@ class Pagination{
 			$links='<div class="pagination"><ul>';
 			if($disp==1){
 				$pclass="disabled";
+				$neg2=$this->page;
+				$neg1=$this->page;
 			}
 			if($disp==$number){
 				$nclass="disabled";
+				$plus1=$this->page;
+				$plus2=$this->page;
 			}
     		$links.='<li class="prev '.$pclass.'"><a href="'.$this->root.'&page='.$neg1.'">&larr; Previous</a></li>';
     		if($dispd2>1){

@@ -94,6 +94,28 @@ class Post {
     	}
 	}
 	/*
+	 Function: isValidPath
+	
+	Checks if a given path references a valid post.
+	
+	Parameters:
+	
+	path- the path of the post
+	
+	Returns:
+	
+	boolean true if the page exists
+	*/
+	public function isValidPath($path){
+		$db=load::db();
+    	$pID=$db->getOne('SELECT pID FROM '.WRITR_PREFIX.'posts WHERE pPath=?', array($path));
+    	if($pID){//if we found a result its valid
+    		return true;
+    	}else{
+    		return false;
+    	}
+	}
+	/*
 	 Function: getPostInfo
 	
 	Returns an array of all the page information
