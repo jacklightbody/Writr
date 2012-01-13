@@ -12,7 +12,7 @@
 <body>
 
   <div id="container">
-
+<div id="inside">
 
     <h1><a href="index.php"><?php echo Config::get('site_name');?></a></h1><hr/>
 
@@ -28,6 +28,7 @@
 <?php }?>
 </div>
 <?php echo $pagination;?>
+</div>
 </div>
 </body>
 </html>

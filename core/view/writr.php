@@ -10,6 +10,10 @@ defined('WRITR_LOADED') or die("Access Denied.");
   bkLib.onDomLoaded(function() {
   		new nicEditor().panelInstance('body');
 });
+var variable=0;
+function generateTitle(title){
+	return title.replace(' ','-');
+}
   </script>
 <?php
 if(isset($_GET['error'])){
@@ -22,9 +26,9 @@ if(isset($_GET['task'])){
 	if($_GET['task']=='new'){?>
 		<form method="post" class="form-stacked" action="form_submit.php?file=writr&function=newPost&origin=writr">
 			<label for="name">Name</label>
-			<input type="text" class="full" name="name" placeholder="post"/>
+			<input type="text" class="full" id="pageName" onkeyup="if(variable==0){$('#pagePath').val(generateTitle($(this).val()))}"name="name" placeholder="post"/>
 			<label for="path">Path</label>
-			<input type="text" class="full" name="path" placeholder="path"/>
+			<input type="text" class="full" name="path" id="pagePath" onclick="variable=1" placeholder="path"/>
 			<label for="theme">Theme</label>
 			<select name="theme">
 				<?php foreach($themes as $theme){ ?>

@@ -7,7 +7,7 @@ Class UserController extends Controller{
 		if(!isset($_GET['page'])){
 			$_GET['page']=0;
 		}
-		$up = new Pagination($users,$_GET['page'],'dashboard.php?path=user');
+		$up = new Pagination($users,$_GET['page'],'dashboard.php?path=user','page');
 		$list=$up->getList();
 		$nav=$up->generateLinks();
 		if($_GET['task']=='edit'){

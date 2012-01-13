@@ -4,11 +4,13 @@ class Pagination{
 	var $list;
 	var $page;
 	var $root;
-	public function __construct($list,$page=0,$root){
+	var $get;
+	public function __construct($list,$page=0,$root,$get){
 		$this->length=count($list);
 		$this->page=$page;
 		$this->list=$list;
 		$this->root=$root;
+		$this->get=$get.'=';
 	}
 	public function getList(){
 		$start=10*$this->page;
@@ -37,34 +39,39 @@ class Pagination{
 				$plus1=$this->page;
 				$plus2=$this->page;
 			}
-    		$links.='<li class="prev '.$pclass.'"><a href="'.$this->root.'&page='.$neg1.'">&larr; Previous</a></li>';
+			$sym='?';
+			if(strpos($this->root, '?')){
+				$sym='&';
+			}
+    		$links.='<li class="prev '.$pclass.'"><a href="'.$this->root.$sym.$this->get.$neg1.'">&larr; Previous</a></li>';
     		if($dispd2>1){
-    			$links.='<li><a href="'.$this->root.'&page=1">1</a></li>';
+    			$links.='<li><a href="'.$this->root.$sym.$this->get.'">1</a></li>';
     			$links.='<li><a href="#">...</a></li>';
     		}
     		if($dispd2>=1){
-    			$links.='<li><a href="'.$this->root.'&page='.$neg2.'">'.$dispd2.'</a></li>';
+    			$links.='<li><a href="'.$this->root.$sym.$this->get.$neg2.'">'.$dispd2.'</a></li>';
     		}
     		if($dispd>=1){
-    			$links.='<li><a href="'.$this->root.'&page='.$neg1.'">'.$dispd.'</a></li>';
+    			$links.='<li><a href="'.$this->root.$sym.$this->get.$neg1.'">'.$dispd.'</a></li>';
     		}
    			$links.='<li class="active"><a href="#">'.$disp.'</a></li>';
    			if($dispu1<=$number){
-   	   			$links.='<li><a href="'.$this->root.'&page='.$plus1.'">'.$dispu1.'</a></li>';
+   	   			$links.='<li><a href="'.$this->root.$sym.$this->get.$plus1.'">'.$dispu1.'</a></li>';
    	    	}
    	    	if($dispu2<=$number){
-   	   			$links.='<li><a href="'.$this->root.'&page='.$plus2.'">'.$dispu2.'</a></li>';
+   	   			$links.='<li><a href="'.$this->root.$sym.$this->get.$plus2.'">'.$dispu2.'</a></li>';
    	   		}
     		if($dispu2<$number){
     			$links.='<li><a href="#">...</a></li>';
-    			$links.='<li><a href="'.$this->root.'&page='.$number.'">'.$number.'</a></li>';
+    			$links.='<li><a href="'.$this->root.$sym.$this->get.$number.'">'.$number.'</a></li>';
     		}
-    		$links.='<li class="next '.$nclass.'"><a href="'.$this->root.'&page='.$plus1.'">Next &rarr;</a></li>';
+    		$links.='<li class="next '.$nclass.'"><a href="'.$this->root.$sym.$this->get.$plus1.'">Next &rarr;</a></li>';
 			$links.='  </ul></div>';
 			return $links;
 		}
 	}
 	public function calcPages(){
+		return 2;
 		if($this->length % 10 == 0){
 			return $this->length/10;
 		}else{

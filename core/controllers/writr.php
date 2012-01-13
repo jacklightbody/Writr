@@ -29,7 +29,7 @@ Class WritrController extends Controller{
 		if(!isset($_GET['page'])){
 			$_GET['page']=0;
 		}
-		$up = new Pagination($posts,$_GET['page'],'dashboard.php?path=writr');
+		$up = new Pagination($posts,$_GET['page'],'dashboard.php?path=writr','page');
 		$list=$up->getList();
 		$nav=$up->generateLinks();
 		if($_GET['task']=='new'||$_GET['task']==edit){

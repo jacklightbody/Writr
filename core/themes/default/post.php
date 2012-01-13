@@ -12,6 +12,7 @@ $post=New Post();
 <body>
 
   <div id="container">
+  <div id="inside">
 
 
      <h1><a href="index.php"><?php echo Config::get('site_name');?></a></h1><hr/>
@@ -34,6 +35,7 @@ echo $post->getBody();
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
 </div>
 </div>
 </body>
