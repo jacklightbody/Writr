@@ -3,7 +3,7 @@ defined('WRITR_LOADED') or die("Access Denied.");
 ?>
 <script type="text/javascript" src="core/js/tablesorter.js"></script>
 <script type="text/javascript" src="core/js/nicedit.js"></script>
-<script type="text/javascript">$(document).ready(function() { $(".user-list").tablesorter(); } ); </script>
+<script type="text/javascript">$(document).ready(function() { $(".attribute-list").tablesorter(); } ); </script>
 <script type="text/javascript">
   bkLib.onDomLoaded(function() {
   		new nicEditor().panelInstance('body');
@@ -12,7 +12,7 @@ defined('WRITR_LOADED') or die("Access Denied.");
 <?php
 if(isset($_GET['error'])){
 	if($_GET['error']==1){
-		echo '<br/><div style="margin-left:140px;width:328px!important;"class="full alert-message error">Username or email is already in use.</div>';
+		echo '<br/><div style="margin-left:140px;width:328px!important;"class="full alert-message error">Handle is already in use.</div>';
 	}
 }
 if(isset($_GET['task'])){
@@ -51,15 +51,15 @@ if(isset($_GET['task'])){
 	}
 	echo '</div>';
 }else{
-$users=$data['list'];
+$users=$list;
 ?>
 	<a href="?path=user&task=new" class="btn large primary">New User</a>
 	<br/><br/>
-	<table class="user-list bordered-table zebra-striped">
-	<thead><th>Name</th><th>Email</th><th>Date Registered</th><th>Options</th></thead>
-	<?php foreach($users as $user){ ?>
+	<table class="attribute-list bordered-table zebra-striped">
+	<thead><th>Name</th><th>Handle</th><th>Type</th></thead>
+	<?php foreach($attrs as $attr){ ?>
 		<tr>
-			<td><a href="?path=user&task=edit&id=<?php echo $user['uID'];?>"><?php echo $user['uLogin'];?></a></td>
+			<td><a href="?path=attribute&task=edit&id=<?php echo $attr['aID'];?>"><?php echo $attr['aName'];?></a></td>
 			<td><a href="mailto:<?php echo $user['uEmail'];?>"><?php echo $user['uEmail'];?></a></td>
 			<td style="width:140px;"><?php echo date('F j, Y', $user['uDateRegistered']);?></td>
 			<td><a class="btn small" href="?path=user&task=edit&id=<?php echo $user['uID'];?>">Edit</a> 

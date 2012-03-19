@@ -19,10 +19,10 @@
           </ul>
           <ul class="nav">
             <li class="menu">
-              <a href="?path=writr&task=new" onmouseover="$(this).parent('li').addClass('open')" onmouseout="$(this).parent('li').removeClass('open')" class="menu">Write</a>
+              <a href="?path=writr&amp;task=new" onmouseover="$(this).parent('li').addClass('open')" onmouseout="$(this).parent('li').removeClass('open')" class="menu">Write</a>
               <ul onmouseover="$(this).parent('li').addClass('open')" onmouseout="$(this).parent('li').removeClass('open')" class="menu-dropdown">
               	<li><a href="?path=writr">Posts</a></li>
-                <li><a href="?path=writr&task=new">New Post</a></li>
+                <li><a href="?path=writr&amp;task=new">New Post</a></li>
               </ul>
             </li>
             <li class="menu">

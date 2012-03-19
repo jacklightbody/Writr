@@ -77,7 +77,7 @@ class Text {
 		$name = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $class_name));	
 	}
 	
-	function shortText($text, $chars=255, $tail='…') {
+	public function shortText($text, $chars=255, $tail='…') {
 		if (intval($chars)==0) $chars=255;
 		$text=strip_tags($text,'<a>');
 		if (function_exists('mb_substr') && function_exists('mb_strlen')) {
@@ -92,7 +92,7 @@ class Text {
 		return $text;			
 	}
 
-    function shortenTextWord($text, $chars=255, $tail='…') {
+    public function shortenTextWord($text, $chars=255, $tail='…') {
 		if (intval($chars)==0) $chars=255;
 		$text=strip_tags($text,'<a>');
 		if (function_exists('mb_substr')) {
@@ -105,5 +105,11 @@ class Text {
 			}
 		}
 		return $text;		
+	}
+	public function fallback($var1,$var2){
+		if(isset($var1)&&$var1!=''){
+			return $var1;
+		}
+		return $var2;
 	}
 }

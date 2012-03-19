@@ -1,6 +1,7 @@
 <?php
 defined('WRITR_LOADED') or die("Access Denied.");
 Class UserController extends Controller{
+	var $title='Users';
 	public function view(){
 		load::helper('pagination');
 		$users=User::getAll();

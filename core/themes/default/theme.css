@@ -6,10 +6,9 @@
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
     pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:20px; font-style: italic; }
 body{
-	background-color:#1f1f1f;   	
+	background-color:#2E2E2E;   	
 }
 #container{
 	margin-top:-10px;
@@ -23,10 +22,9 @@ body{
 	font-family: Helvetica, Arial, FreeSans, san-serif;
 	width: 500px;
 	background-color:#fff;
-	-webkit-box-shadow: 0 0 5px #000;
-	-moz-box-shadow: 0 0 5px #000;
-	box-shadow: 0 0 5px #000;
-
+	-webkit-box-shadow: 0 0 10px #000;
+	-moz-box-shadow: 0 0 10px #000;
+	box-shadow: 0 0 10px #000;
 }
 #inside{
 	width:400px;

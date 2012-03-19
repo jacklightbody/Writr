@@ -29,7 +29,7 @@ class Config {
 	*/
 	public function save($handle,$data){
 		$db=load::db();
-		$v=$db->getOne("SELECT cValue from ".WRITR_PREFIX."config where cKey=?",array($handle));
+		$v=self::get($handle);
 		if($v){
 			$db->query('UPDATE '.WRITR_PREFIX.'config set cValue=? WHERE cKey=?', array($data,$handle));
 		}else{

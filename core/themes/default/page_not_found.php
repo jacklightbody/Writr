@@ -10,11 +10,13 @@
 <body>
 
   <div id="container">
+  	<div id="inside">
 
 
      <h1><a href="index.php"><?php echo Config::get('site_name');?></a></h1><hr/>
 
 <p>The post you requested can't be found. <a href="index.php">&laquo; Back Home</a></p>
+</div>
 </div>
 </body>
 </html>

@@ -88,7 +88,7 @@ class User{
 		$pass=text::sanitize($pass);
 		$email=text::sanitize($email);
 		$pass=self::makePass($pass);
-		$db->Execute('INSERT INTO '.WRITR_PREFIX.'users (uID,uLogin,uEmail,uPass,uIsActive) VALUES (1,?,?,?,1)', array($name,$email,$pass));	
+		$db->Execute('INSERT INTO '.WRITR_PREFIX.'users (uID,uLogin,uEmail,uPass,uIsActive,uDateRegistered) VALUES (1,?,?,?,1,?)', array($name,$email,$pass,time()));	
 	}
 	public function makePass($pass){
 		$password=md5($pass);

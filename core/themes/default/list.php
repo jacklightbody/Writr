@@ -18,7 +18,11 @@
 
 
 <div>
-<?php foreach($posts as $post){
+<?php
+if(count($posts)==0){
+  echo 'Nothing here yet. You can add posts from the <a href="dashboard.php">dashboard</a>.';
+} 
+foreach($posts as $post){
 ?>
 <div class="clearfix">
 	<div style="width:50px;clear:both;float:left;margin-right:20px;">

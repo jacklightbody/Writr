@@ -13,8 +13,8 @@ class Pagination{
 		$this->get=$get.'=';
 	}
 	public function getList(){
-		$start=10*$this->page;
-		return array_slice($this->list,$start,10);
+		$start=config::get('pagination')*$this->page;
+		return array_slice($this->list,$start,config::get('pagination'));
 	}
 	public function generateLinks(){
 		$disp=$this->page+1;
@@ -29,6 +29,8 @@ class Pagination{
 		$number=$this->calcPages();
 		if($number>1){
 			$links='<div class="pagination"><ul>';
+			$nclass='';
+			$pclass='';
 			if($disp==1){
 				$pclass="disabled";
 				$neg2=$this->page;
@@ -71,11 +73,10 @@ class Pagination{
 		}
 	}
 	public function calcPages(){
-		return 2;
-		if($this->length % 10 == 0){
-			return $this->length/10;
+		if($this->length % config::get('pagination') == 0){
+			return $this->length/config::get('pagination');
 		}else{
-			return intval($this->length/10)+1;
+			return intval($this->length/config::get('pagination'))+1;
 		}
 	}
 }

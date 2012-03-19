@@ -25,10 +25,8 @@ class Post {
 	*/
 	public function __construct($pID=1){
 		$path=$_GET['path'];
-		if(isset($pID)&&$pID!=1){
+		if(isset($pID)){
 			$this->getPostByID($pID);
-		}elseif(!isset($path)){
-			$this->getPostByID(1);//if theres no path set we use the home page
 		}else{
 			$this->getPostByPath($path);//otherwise we load the post
 		}
@@ -136,6 +134,10 @@ class Post {
 	public function getAllPosts(){
 		$db=load::db();
 		return $db->getAll('SELECT * from '.WRITR_PREFIX.'posts');
+	}
+	public function getPostsLimit($start=0,$end=10){
+		$db=load::db();
+		return $db->getAll('SELECT * from '.WRITR_PREFIX.'posts LIMIT ?,?',array($start,$end));
 	}
 	public function getAllLivePosts(){
 		$db=load::db();

@@ -19,4 +19,8 @@ class Controller {
 	*/
 	public function view() {			
 	}
+	public function submitForm($functionName){
+		$action='form_submit.php?file='.$_GET['path'].'&function='.$functionName;
+		return $action;
+	}
 }

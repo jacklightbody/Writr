@@ -31,8 +31,9 @@ class Load {
  		    }
  		    $db->Connect(SQL_SERVER, SQL_USER, SQL_PASS, SQL_DB);
      	} catch (exception $e) { 
- 		    var_dump($e); 
- 		    adodb_backtrace($e->gettrace());
+              echo 'Unable to connect to database.';
+ 		    //var_dump($e); 
+ 		    //adodb_backtrace($e->gettrace());
      	} 
      	return $db;
      }	

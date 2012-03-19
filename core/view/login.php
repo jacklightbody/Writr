@@ -17,7 +17,7 @@ if(isset($_GET['task'])&&$_GET['task']=='reset'){
 }
 ?>
 <div id="container-thin">
-<form method="post" class="form-stacked" action="form_submit.php?file=login&function=authenticate&origin=login">
+<form method="post" class="form-stacked" action="<?php echo Controller::submitForm('authenticate');?>">
 	<?php if(isset($_GET['error'])){
 	if($_GET['error']==1){
 		echo '<br/><div style="width:250px;"class="alert-message error">Invalid username or password.</div>';
@@ -38,7 +38,7 @@ if(isset($resetMessage)){
 }?>
 	<h2>Login</h2>
     <label for="login">Username or Email</label>
-    <input type="text" class="xlarge" name="login" placeholder="username"/>
+    <input type="text" class="xlarge" autofocus="autofocus"name="login" placeholder="username"/>
     <label for="pass">Password</label>
     <input type="password" class="xlarge" name="pass" placeholder="password"/>
     <br/><br/><input type="submit" style="width: 280px;"class="btn large primary" value="Login">
@@ -48,7 +48,7 @@ if(isset($resetMessage)){
 <div id="forgot-pass" class="modal hide fade">
             <div class="modal-header">
               <a href="#" class="close">&times;</a>
-              <form method="post" action="form_submit.php?file=login&function=forgot&origin=login">
+              <form method="post" action="<?php echo Controller::submitForm('forgot');?>">
               <h3>Forgot your password?</h3>
             </div>
             <div class="modal-body">

@@ -1,7 +1,5 @@
 <?php 
 defined('WRITR_LOADED') or die("Access Denied.");
-	$themes=$data['themes'];
-	$cthemes=$data['cthemes'];
 ?>
 <script type="text/javascript" src="core/js/tablesorter.js"></script>
 <script type="text/javascript" src="core/js/nicedit.js"></script>
@@ -18,15 +16,15 @@ function generateTitle(title){
 <?php
 if(isset($_GET['error'])){
 	if($_GET['error']==1){
-		echo '<br/><div style="margin-left:20px;width:328px!important;"class="full alert-message error">Please fill out all fields.</div>';
+		echo '<br/><div style="margin-left:145px;width:328px!important;"class="full alert-message error">Please fill out all fields.</div>';
 	}
 }
 if(isset($_GET['task'])){
 	echo '<div id="container-thin">';
 	if($_GET['task']=='new'){?>
-		<form method="post" class="form-stacked" action="form_submit.php?file=writr&function=newPost&origin=writr">
+		<form method="post" class="form-stacked" action="<?php echo Controller::submitForm('newPost');?>">
 			<label for="name">Name</label>
-			<input type="text" class="full" id="pageName" onkeyup="if(variable==0){$('#pagePath').val(generateTitle($(this).val()))}"name="name" placeholder="post"/>
+			<input type="text" class="full" autofocus="autofocus" id="pageName" onkeyup="if(variable==0){$('#pagePath').val(generateTitle($(this).val()))}"name="name" placeholder="post"/>
 			<label for="path">Path</label>
 			<input type="text" class="full" name="path" id="pagePath" onclick="variable=1" placeholder="path"/>
 			<label for="theme">Theme</label>
@@ -46,7 +44,7 @@ if(isset($_GET['task'])){
 			<input style="width:350px!important;" type="submit" class="full btn large primary" value="Add">
 		</form>
 	<?php }elseif($_GET['task']=='edit'){?>
-			<form method="post" class="form-stacked" action="form_submit.php?file=writr&function=update&origin=writr">
+			<form method="post" class="form-stacked"autofocus="autofocus" action="<?php echo Controller::submitForm('update');?>">
 			<label for="name">Name</label>
 			<input type="text" class="full" value="<?php echo $data['post']['pName'];?>"name="name" placeholder="post"/>
 			<label for="path">Path</label>

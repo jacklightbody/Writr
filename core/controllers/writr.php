@@ -1,6 +1,7 @@
 <?php
 defined('WRITR_LOADED') or die("Access Denied.");
 Class WritrController extends Controller{
+	var $title='Writr';
 	public function newPost(){
 		foreach($_POST as $post){
 			if(!isset($post)||$post==""){
@@ -32,7 +33,7 @@ Class WritrController extends Controller{
 		$up = new Pagination($posts,$_GET['page'],'dashboard.php?path=writr','page');
 		$list=$up->getList();
 		$nav=$up->generateLinks();
-		if($_GET['task']=='new'||$_GET['task']==edit){
+		if(isset($_GET['task'])&&($_GET['task']=='new'||$_GET['task']=='edit')){
 			if($handle) {
 				while(($file = readdir($handle)) !== false) {
 					if (substr($file, 0, 1) != '.' && is_dir('themes/'.$file)) {
@@ -48,10 +49,11 @@ Class WritrController extends Controller{
 					}
 				}
 			}
-			if($_GET['task']=='new'){
+		}
+		if(isset($_GET['task'])&&$_GET['task']=='new'){
 				return array("themes"=>$themes,"cthemes"=>$cthemes);
 			}
-		}if($_GET['task']=='edit'){
+		if(isset($_GET['task'])&&$_GET['task']=='edit'){
 			$p=new Post($_GET['id']);
 			return array("post"=>$p->getPostInfo(),"themes"=>$themes,"cthemes"=>$cthemes);
 		}else{
