@@ -1,4 +1,5 @@
 <?php 
+defined('WRITR_LOADED') or die("Access Denied.");
 $post=New Post();
 ?>
 <!DOCTYPE html>

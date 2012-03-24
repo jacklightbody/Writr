@@ -23,7 +23,7 @@ class Post {
 	   <getPostByID>
 	   <getPostByPath>
 	*/
-	public function __construct($pID=1){
+	public function __construct($pID){
 		$path=$_GET['path'];
 		if(isset($pID)){
 			$this->getPostByID($pID);

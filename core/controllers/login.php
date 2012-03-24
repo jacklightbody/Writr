@@ -6,9 +6,7 @@ Class LoginController extends Controller{
 	}
 	public function authenticate(){
 		load::helper('text');
-		if(User::authenticate(Text::sanitize($_POST['login']),Text::sanitize($_POST['pass']))){
-			return array("goto"=>'writr');
-		}else{
+		if(!User::authenticate(Text::sanitize($_POST['login']),Text::sanitize($_POST['pass']))){
 			return array("goto"=>'login&error=1');
 		}
 	}

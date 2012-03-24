@@ -22,6 +22,25 @@ Class WritrController extends Controller{
 		Post::updatePost($_POST['id'],$_POST['name'],$_POST['body'],$this->generateUrl($_POST['path']),$_POST['draft'],$_POST['theme']);
 	}
 	public function view(){
+		load::helper('html');
+		$html=New Html();
+		$html->js('tablesorter.js',null,array('footer'=>0,'version'=>'2.0.5','handle'=>'tablesorter'));
+		$html->js('nicedit.js',null,array('footer'=>0,'version'=>'.09r3','handle'=>'nicedit'));
+		$script=<<<EOD
+		<script type="text/javascript">
+		$(document).ready(function() { 
+			$(".post-list").tablesorter(); 
+		});  
+		bkLib.onDomLoaded(function() {
+			new nicEditor().panelInstance("body");
+		});
+		var variable=0;
+		function generateTitle(title){
+			return title.replace(' ','-');
+		}
+		</script>
+EOD;
+		$html->addHeaderItem($script);
 		$themes=array();
 		$cthemes=array();
 		$handle=opendir('themes');

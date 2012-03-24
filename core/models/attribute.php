@@ -30,7 +30,49 @@ class Attribute {
 		$db=load::db();
 		return $db->getAll("SELECT * FROM ".WRITR_PREFIX."attributes INNER JOIN attribute_types ON attributes.atID=attribute_types.atID INNER JOIN attribute_values ON attributes.aID=attribute_values.aID");
 	}
-	public function add(){
-		
+	public function add($atID,$aName,$aHandle){
+		$db=load::db();
+		$db->query('INSERT INTO '.WRITR_PREFIX.'attributes (atID,aName,aHandle) VALUES (?,?,?)',array($atID,$aName,$aHandle));
 	}
+	public function deleteByID($aID){
+		$db=load::db();
+		$db->query("DELETE FROM ".WRITR_PREFIX."attributes WHERE aID=?",array($aID));
+	}
+	public function deleteByTypeID($atID){
+		$db=load::db();
+		$db->query("DELETE FROM ".WRITR_PREFIX."attributes WHERE atID=?",array($atID));
+	}
+}
+class AttributeTypes{
+	public function getAllTypes(){
+		$db=load::db();
+		return $db->getAll('SELECT * FROM '.WRITR_PREFIX.'attribute_types');
+	}
+	public function addType($atHandle,$ext='core'){
+		if(is_object($ext)){
+			$extID=$ext->getHandle();
+		}else{
+			$extID=$ext;
+		}
+		$db=load::db();
+		$db->query("INSERT INTO ".WRITR_PREFIX."attribute_types (atHandle,extHandle) VALUES (?,?)",array($atHandle,$extID));
+	}
+	public function getByID($atID){
+		$db=load::db();
+		$info= $db->getAll('SELECT * FROM '.WRITR_PREFIX.'attribute_types WHERE atID=?',array($atID));
+		return $info[0];
+	}
+	public function deleteByExtension($extHandle){
+		$db=load::db();
+		$atID=$db->getOne('SELECT atID FROM '.WRITR_PREFIX.'attribute_types WHERE extHandle=?',array($extHandle));
+		Attribute::deleteByTypeID($atID);
+		$db->query("DELETE FROM ".WRITR_PREFIX."attribute_types WHERE extHandle=?",array($extHandle));
+	}
+	public function deleteByID($atID){
+		$db=load::db();
+		$db->query("DELETE FROM ".WRITR_PREFIX."attribute_types WHERE atID=?",array($atID));
+	}
+}
+Class AttributeValues(){
+	
 }

@@ -9,9 +9,6 @@ $className=Text::camelcase($_GET['file']).'Controller';
 $f=new $className();
 $data=$f->$_GET['function']();
 if(isset($data['goto'])){
-	$_GET['origin']=$data['goto'];
+	$_GET['file']=$data['goto'];
 }
-if(!isset($_GET['origin'])){
-	$_GET['origin']=$_GET['file'];
-}
-Header('Location: dashboard.php?path='.$_GET['origin']);
+Header('Location: dashboard.php?path='.$_GET['file']);

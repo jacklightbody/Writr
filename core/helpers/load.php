@@ -27,12 +27,13 @@ class Load {
  		try { 
      	    $db = ADONewConnection('mysql');
  		    if(!$db){
- 		    	die('Unsuccessful Connection');
+ 		    	  die('Unsuccessful Connection');
  		    }
  		    $db->Connect(SQL_SERVER, SQL_USER, SQL_PASS, SQL_DB);
      	} catch (exception $e) { 
               echo 'Unable to connect to database.';
- 		    //var_dump($e); 
+              die;
+ 		    //\var_dump($e); 
  		    //adodb_backtrace($e->gettrace());
      	} 
      	return $db;
@@ -52,6 +53,9 @@ class Load {
 	   <helper>
 	*/
      public function model($name,$extHandle=null){
+        if($extHandle=='core'){
+            unset($extHandle);
+        }
      	$root=str_replace('core/helpers/load.php', '', __file__);
      	if(file_exists(''.DIR_MODELS.'/'.$name.'.php')){
      		require_once(''.DIR_MODELS.'/'.$name.'.php');
@@ -62,29 +66,32 @@ class Load {
      	}
      }
 
-   	/*
-	 Function: helper
-	
-	Loads a site helper in the correct location
-	
-	Parameters:
-	
-	   name - The name of the helper you want to load
-	   extHandle - An option handle of the extension to load the helper from.
-	   
-	 See Also:
-	
-	   <model>
-	*/
+            /*
+     Function: helper
+    
+    Loads a site helper in the correct location
+    
+    Parameters:
+    
+       name - The name of the helper you want to load
+       extHandle - An option handle of the extension to load the helper from.
+       
+     See Also:
+    
+       <model>
+    */
      public function helper($name,$extHandle=null){
-     	$root=str_replace('core/helpers/load.php', '', __file__);
-     	if(file_exists(''.DIR_HELPERS.'/'.$name.'.php')){
-     		require_once(''.DIR_HELPERS.'/'.$name.'.php');
-     	}elseif(isset($extHandle)&&file_exists('extensions/'.$extHandle.'/'.DIR_HELPERS.'/'.$name)){
-     		require_once('extensions/'.$extHandle.'/'.DIR_HELPERS.'/'.$name);
-     	}elseif(file_exists(''.DIR_CORE_HELPERS.'/'.$name.'.php')){
-     		require_once(''.DIR_CORE_HELPERS.'/'.$name.'.php');
-     	}
+        if($extHandle=='core'){
+            unset($extHandle);
+        }
+        $root=str_replace('core/helpers/load.php', '', __file__);
+        if(file_exists(''.DIR_HELPERS.'/'.$name.'.php')){
+            require_once(''.DIR_HELPERS.'/'.$name.'.php');
+        }elseif(isset($extHandle)&&file_exists('extensions/'.$extHandle.'/'.DIR_HELPERS.'/'.$name)){
+            require_once('extensions/'.$extHandle.'/'.DIR_HELPERS.'/'.$name);
+        }elseif(file_exists(''.DIR_CORE_HELPERS.'/'.$name.'.php')){
+            require_once(''.DIR_CORE_HELPERS.'/'.$name.'.php');
+        }
      }
      /*
 	 Function: Controller
@@ -101,6 +108,9 @@ class Load {
 	   <model>
 	*/
      public function controller($name,$extHandle=null){
+        if($extHandle=='core'){
+            unset($extHandle);
+        }
      	if(file_exists('controllers/'.$name.'.php')){
      		require_once('controllers/'.$name.'.php');
      	}elseif(isset($extHandle)&&file_exists('extensions/'.$extHandle.'/controllers/'.$name)){
@@ -126,6 +136,9 @@ class Load {
 	   <model>
 	*/
      public function theme($handle,$template,$extHandle=null){
+        if($extHandle=='core'){
+            unset($extHandle);
+        }
      	if(file_exists('themes/'.$handle.'/'.$template.'.php')){
      		return 'themes/'.$handle.'/'.$template.'.php';
      	}elseif(isset($extHandle)&&file_exists('extensions/'.$extHandle.'/themes/'.$handle.'/'.$template.'.php')){
@@ -137,6 +150,9 @@ class Load {
      	}
      }
     public function oneOff($template,$extHandle=null){
+        if($extHandle=='core'){
+            unset($extHandle);
+        }
     	$handle=Config::get('home_theme');
     	if(file_exists('view/'.$template.'.php')){
     		return 'view/'.$template.'.php';

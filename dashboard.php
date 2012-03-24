@@ -18,8 +18,8 @@ if($_GET['path']=='login'&&isset($_COOKIE['writr'])&&User::isLoggedIn()){
 if(!isset($_GET['path'])){
 	$_GET['path']='writr';
 }
-//ini_set("display_errors", 1);
-//error_reporting(E_ALL);
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 Load::helper('view');
 Load::helper('text');
 Load::helper('controller');
@@ -28,27 +28,27 @@ $elements=DashboardElements::getElements();
 $route=explode('/', View::route(1));
 array_pop($route);//pop off the file
 $themePath=implode('/', $route);
+load::helper('html');
+$html=New Html();
+$html->css('bootstrap.css',null,array('footer'=>0,'version'=>'1.4','handle'=>'bootstrap'));
+$html->css('core.css',null,array('footer'=>0,'version'=>'1','handle'=>'core'));
+$html->js('jquery.js',null,array('footer'=>0,'version'=>'1.7','handle'=>'jquery'));
 load::controller($_GET['path']);
+load::model($_GET['path']);//automatically load the model for the controller if there is one.
 $controller=Text::camelcase($_GET['path']).'Controller';
-$headerCss=array('core/css/bootstrap.css','core/css/core.css');
-$headerJs=array('core/js/jquery.js');
 $c=New $controller();
 $data=$c->view();
-if(is_array($data['headerCss'])){
-	$headerCss=array_merge($headerCss, $data['headerCss']);
+$headerItems=$html->outputHeaderlinks();
+$footerItems=$html->outputFooterlinks();
+$dashboardTitle='Dashboard';
+if(isset($c->title)){
+	$dashboardTitle=$c->title;
 }
-if(is_array($data['headerJs'])){
-	$headerJs=array_merge($headerJs, $data['headerJs']);
-}
-$headerItems='';
-foreach($headerCss as $css){
-	$headerItems.='<link rel="stylesheet" href="'.$css.'"/>';
-}
-foreach($headerJs as $js){
-	$headerItems.='<script type="text/javascript" src="'.$js.'"></script>';
-}
-$headerItems.='<title>Dashboard | '.config::get('site_name').'</title>';
+$headerItems.='<title>'.$dashboardTitle.' | '.config::get('site_name').'</title>';
 ob_start();
+if(isset($data)){
+	extract($data);
+}
 require 'core/view/'.$_GET['path'].'.php';
 $pageContent = ob_get_contents();
 ob_end_clean();

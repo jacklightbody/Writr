@@ -3,6 +3,8 @@ if(file_exists('config.php')){
 	header("Location: index.php");
 	exit;
 }
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 if(!empty($_POST)){
 	foreach($_POST as $post){
 		if(!$post||$post==""){
@@ -21,6 +23,7 @@ if(!empty($_POST)){
 		file_put_contents('config.php', $configuration);
 		require 'core/define.php';
 		//create the tables we need
+		$db=load::db();
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'users(uID integer AUTO_INCREMENT,uLogin varchar(255), uEmail varchar(255), uPass varchar(255),
 uIsActive integer, uDateRegistered integer, PRIMARY KEY (uID))');
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'posts(pID integer AUTO_INCREMENT,pName varchar(255), pPath varchar(500),pBody longtext, pTheme varchar(255),
@@ -28,15 +31,25 @@ pIsActive integer, pAuthorID integer, pDatePublished integer, UNIQUE (pPath),PRI
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'ip(ipID int AUTO_INCREMENT,ip varchar(255), uID integer,PRIMARY KEY (ipID))');
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'config(cID int AUTO_INCREMENT,cKey varchar(255), cValue mediumtext,PRIMARY KEY (cID))');
 		$db->execute('CREATE TABLE '.WRITR_PREFIX.'dashboardelements(eID int AUTO_INCREMENT,ext varchar(255), name varchar(255),file varchar(255),PRIMARY KEY (eID))');
+		$db->execute('CREATE TABLE '.WRITR_PREFIX.'attributes(aID int AUTO_INCREMENT,atID int,aName varchar(255),aHandle varchar(255),PRIMARY KEY (aID))');
+		$db->execute('CREATE TABLE '.WRITR_PREFIX.'attribute_values(aID int AUTO_INCREMENT,aValue mediumtext,aMisc mediumtext,PRIMARY KEY (aID))');
+		$db->execute('CREATE TABLE '.WRITR_PREFIX.'attribute_types(atID int AUTO_INCREMENT,extHandle varchar(255) atHandle varchar,PRIMARY KEY (atID))');
 		Config::save('site_name',$_POST['site_name']);
 		Config::save('home_theme','default');
-		Config::save('posts_home_page',10);
+		Config::save('pagination',10);
 		User::addSuper($_POST['user'],$_POST['pass'],$_POST['email']);
 		User::authenticate($_POST['user'],$_POST['pass']);
-		load::helper('dashboard_elements');
-		DashboardElements::registerElement('user','Manage Users','core');
+		load::model('dashboard_elements');
+		DashboardElements::registerElement('user','Users','core');
 		DashboardElements::registerElement('general','Settings','core');
-		header('Location: writr.php');
+		DashboardElements::registerElement('attribute','Attributes','core');
+		load::model('attribute');
+		AttributeTypes::addType('select');
+		AttributeTypes::addType('boolean');
+		AttributeTypes::addType('date');
+		AttributeTypes::addType('text');
+		AttributeTypes::addType('textarea');
+		header('Location: index.php');
 		exit;
 	}else{
 		header('Location: install.php?error='.$error);
@@ -137,7 +150,7 @@ if(!isset($message)){
 		<a href="javascript:void(0);" class="show-hide center hide" onclick="document.getElementById('user-password').type='password';$('.show-hide').toggle();">Hide Password</a>
 		</span>
 		<hr/>
-		<button type="submit" class="btn large full primary">Install</button>
+		<button type="submit" class="btn large full success">Install</button>
 	</form>
 </body>
 </html>

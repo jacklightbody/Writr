@@ -3,6 +3,17 @@ defined('WRITR_LOADED') or die("Access Denied.");
 Class UserController extends Controller{
 	var $title='Users';
 	public function view(){
+		load::helper('html');
+		$html=New Html();
+		$html->js('tablesorter.js',null,array('footer'=>0,'version'=>'2.0.5','handle'=>'tablesorter'));
+		$script=<<<EOD
+		<script type="text/javascript">
+		$(document).ready(function() { 
+			$(".user-list").tablesorter(); 
+		});  
+		</script>
+EOD;
+		$html->addHeaderItem($script);
 		load::helper('pagination');
 		$users=User::getAll();
 		if(!isset($_GET['page'])){

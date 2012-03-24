@@ -1,18 +1,6 @@
 <?php 
 defined('WRITR_LOADED') or die("Access Denied.");
 ?>
-<script type="text/javascript" src="core/js/tablesorter.js"></script>
-<script type="text/javascript" src="core/js/nicedit.js"></script>
-<script type="text/javascript">$(document).ready(function() { $(".post-list").tablesorter(); } ); </script>
-<script type="text/javascript">
-  bkLib.onDomLoaded(function() {
-  		new nicEditor().panelInstance('body');
-});
-var variable=0;
-function generateTitle(title){
-	return title.replace(' ','-');
-}
-  </script>
 <?php
 if(isset($_GET['error'])){
 	if($_GET['error']==1){
@@ -48,7 +36,7 @@ if(isset($_GET['task'])){
 			<label for="name">Name</label>
 			<input type="text" class="full" value="<?php echo $data['post']['pName'];?>"name="name" placeholder="post"/>
 			<label for="path">Path</label>
-			<input type="text" class="full" value="<?php echo $data['post']['pPath'];?>" name="path" placeholder="path"/>
+			<input type="text" class="full" value="<?php echo $post['pPath'];?>" name="path" placeholder="path"/>
 			<label for="theme">Theme</label>
 			<select name="theme">
 				<?php foreach($themes as $theme){ ?>

@@ -10,6 +10,8 @@
 		define('DIR_JS', "js");
 		define('DIR_CORE', "core");
 		define('DIR_CORE_HELPERS', "core/helpers");
+		define('DIR_EXTENSIONS', "extensions");
+		define('DIR_CORE_EXTENSIONS', "core/extensions");
 		define('DIR_CORE_INSTALL', "core/install");
 		define('DIR_CORE_MODELS', "core/models");
 		define('DIR_CORE_CSS', "core/css");
@@ -20,4 +22,6 @@
 		load::model('post');
 		load::model('config');
 		load::model('user');
+		load::helper('attributes/controller');
+		load::db();//we make sure that the database connecton is good before doing anything
 	?>

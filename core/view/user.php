@@ -1,14 +1,6 @@
 <?php 
 defined('WRITR_LOADED') or die("Access Denied.");
 ?>
-<script type="text/javascript" src="core/js/tablesorter.js"></script>
-<script type="text/javascript" src="core/js/nicedit.js"></script>
-<script type="text/javascript">$(document).ready(function() { $(".user-list").tablesorter(); } ); </script>
-<script type="text/javascript">
-  bkLib.onDomLoaded(function() {
-  		new nicEditor().panelInstance('body');
-});
-  </script>
 <?php
 if(isset($_GET['error'])){
 	if($_GET['error']==1){
